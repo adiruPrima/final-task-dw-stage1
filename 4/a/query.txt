@@ -1,0 +1,7 @@
+1. SELECT * FROM provinsi_tb;
+
+2. SELECT * FROM provinsi_tb
+   SELECT * FROM kabupaten_tb;
+
+3. SELECT * FROM provinsi_tb 
+   WHERE pulau = 'Sumatera';
