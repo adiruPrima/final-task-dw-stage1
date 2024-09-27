@@ -1,4 +1,4 @@
-drawImage(9);
+drawImage(5);
 
 function drawImage(length) {
   if (length % 2 === 0) {
