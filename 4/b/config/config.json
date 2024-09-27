@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "password",
-    "database": "provinsi_dan_kabupaten",
+    "database": "dumbways_personal_web",
     "host": "localhost",
     "dialect": "postgres"
   },
