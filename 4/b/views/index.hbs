@@ -72,34 +72,63 @@
     <!-- Main "Daging" -->
     <div class="container mt-4">
       <div class="row">
-        <!-- Card Loop -->
-
-        <div class="col-md-3 mb-3">
-          {{#each provinsi}}
-            <div class="card">
+        <!-- Provinsi Cards -->
+        {{#each provinsi}}
+          <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+            <div class="card h-100 d-flex flex-column">
               <a href="/detail-provinsi" class="text-decoration-none text-dark">
                 <img
                   src="{{photo}}"
-                  class="card-img-top"
+                  class="card-img-top object-fit-cover"
                   alt="Logo"
                   height="250px"
-                  width="150px"
+                  width="100%"
                 />
-                <div class="card-body">
-                  <h3 class="card-title">{{nama}}</h3>
-                  <p class="card-text">{{diresmikan}}</p>
-                </div>
               </a>
-              <div class="card-footer d-flex justify-content-between">
-                <button class="btn btn-warning">Edit</button>
-                <button class="btn btn-danger">Delete</button>
+              <div class="card-body flex-grow-1">
+                <h3 class="card-title">{{nama}}</h3>
+                <p class="card-text">{{diresmikan}}</p>
               </div>
+              {{#if ../user}}
+              <div class="card-footer d-flex justify-content-between">
+                <a href="/edit-provinsi/{{this.id}}" class="btn btn-warning">Edit</a>
+                <a href="/delete-provinsi/{{this.id}}" class="btn btn-danger">Delete</a>
+              </div>
+              {{/if}}
             </div>
-          {{/each}}
-        </div>
+          </div>
+        {{/each}}
 
+        <!-- Kabupaten Cards -->
+        {{#each kabupaten}}
+          <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+            <div class="card h-100 d-flex flex-column">
+              <a href="/detail-provinsi" class="text-decoration-none text-dark">
+                <img
+                  src="{{photo}}"
+                  class="card-img-top object-fit-cover"
+                  alt="Logo"
+                  height="250px"
+                  width="100%"
+                />
+              </a>
+              <div class="card-body flex-grow-1">
+                <h3 class="card-title">{{nama}}</h3>
+                <p class="card-text">{{diresmikan}}</p>
+              </div>
+              {{#if ../user}}
+              <div class="card-footer d-flex justify-content-between">
+                <a href="/edit-kabupaten/{{this.id}}" class="btn btn-warning">Edit</a>
+                <a href="/delete-kabupaten/{{this.id}}" class="btn btn-danger">Delete</a>
+              </div>
+              {{/if}}
+            </div>
+          </div>
+        {{/each}}
       </div>
     </div>
+
+
 
     <!-- Bootstrap Script -->
     <script

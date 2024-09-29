@@ -23,6 +23,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // to access the images
 app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // body parser permission
 app.use(express.urlencoded({ extended: true }));
@@ -64,8 +65,8 @@ app.get("/not-found", notFound);
 // Handler
 app.post("/add-provinsi", addProvinsi);
 app.post("/add-kabupaten", addKabupaten);
-// app.get("/delete-kabupaten/:id", deleteKabupaten);
-// app.get("/delete-provinsi/:id", deleteProvinsi);
+app.get("/delete-kabupaten/:id", deleteKabupaten);
+app.get("/delete-provinsi/:id", deleteProvinsi);
 // app.post("/edit-kabupaten/:id", editKabupaten);
 // app.post("/edit-provinsi/:id", editProvinsi);
 app.post("/register", register);
@@ -86,9 +87,6 @@ async function home(req, res) {
   const provinsi = await sequelize.query(provinsiQuery, {
     type: QueryTypes.SELECT,
   });
-
-  console.log(kabupaten);
-  console.log(provinsi);
 
   res.render("index", { kabupaten, provinsi, user });
 }
@@ -256,6 +254,8 @@ async function addProvinsi(req, res) {
     ? req.file.path
     : "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
 
+  console.log(req.file);
+
   // Create new provinsi row in database
   try {
     await provinsiModel.create({
@@ -301,6 +301,8 @@ async function addKabupaten(req, res) {
     ? req.file.path
     : "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
 
+  console.log(req.file);
+
   // Create new kabupaten row in database
   try {
     await kabupatenModel.create({
@@ -315,5 +317,41 @@ async function addKabupaten(req, res) {
   }
 
   req.flash("success", "Kabupaten added successfully!");
+  res.redirect("/");
+}
+
+async function deleteProvinsi(req, res) {
+  const { id } = req.params;
+  let result = await provinsiModel.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!result) return res.render("not-found");
+
+  await provinsiModel.destroy({
+    where: {
+      id: id,
+    },
+  });
+  res.redirect("/");
+}
+
+async function deleteKabupaten(req, res) {
+  const { id } = req.params;
+  let result = await kabupatenModel.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!result) return res.render("not-found");
+
+  await kabupatenModel.destroy({
+    where: {
+      id: id,
+    },
+  });
   res.redirect("/");
 }
